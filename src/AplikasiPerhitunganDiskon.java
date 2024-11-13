@@ -259,40 +259,29 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
             // Ambil persentase diskon dari slider
             double persenDiskon = jSlider1.getValue() / 100.0;
             
-            // Hitung harga setelah diskon slider
-            double hargaSetelahDiskonSlider = hargaAwal * (1 - persenDiskon);
-            
-            // Ambil dan terapkan diskon dari kupon ke harga yang sudah didiskon
+            // Ambil diskon dari kupon sebagai persentase dari harga awal
             String couponCode = jTextField2.getText().trim();
-            double couponDiskon = getCouponDiscount(couponCode);
-            double diskonKupon = hargaSetelahDiskonSlider * couponDiskon;
+            double couponDiskonPersen = getCouponDiscount(couponCode);
             
-            // Hitung total persentase diskon untuk pengecekan batas 80%
-            double totalPersenDiskon = (hargaAwal - (hargaSetelahDiskonSlider - diskonKupon)) / hargaAwal;
+            // Hitung total persentase diskon (slider + kupon)
+            double totalPersenDiskon = Math.min(persenDiskon + couponDiskonPersen, 0.80);
             
-            // Jika total diskon melebihi 80%, sesuaikan diskon kupon
-            if (totalPersenDiskon > 0.80) {
-                double maksDiskonTersisa = 0.80 - persenDiskon;
-                diskonKupon = hargaSetelahDiskonSlider * maksDiskonTersisa;
-            }
-            
-            // Hitung harga akhir
-            double hargaAkhir = hargaSetelahDiskonSlider - diskonKupon;
-            double totalDiskon = hargaAwal - hargaAkhir;
+            // Hitung diskon dan harga akhir
+            double totalDiskon = hargaAwal * totalPersenDiskon;
+            double hargaAkhir = hargaAwal - totalDiskon;
             
             // Tampilkan hasil
             fieldDiskon.setText(String.format("%.2f", hargaAkhir));
-            jLabel4.setText(String.format("Anda hemat: Rp %.2f (Diskon Awal %.0f%% + Kupon %.0f%%)", 
-                          totalDiskon, persenDiskon * 100, 
-                          (diskonKupon / hargaSetelahDiskonSlider) * 100));
+            jLabel4.setText(String.format("Anda hemat: Rp %.2f (Diskon %.0f%% + Kupon %.0f%%)", 
+                          totalDiskon, persenDiskon * 100, couponDiskonPersen * 100));
             
             // Tambahkan ke riwayat
             String historyEntry = String.format(
-                "Harga: Rp %.2f | Diskon Awal: %.0f%% | Kupon: %s (%.0f%%) | Total Diskon: Rp %.2f | Harga Akhir: Rp %.2f\n",
+                "Harga: Rp %.2f | Diskon: %.0f%% | Kupon: %s (%.0f%%) | Total Diskon: Rp %.2f | Harga Akhir: Rp %.2f\n",
                 hargaAwal,
                 persenDiskon * 100,
                 couponCode.isEmpty() ? "-" : couponCode,
-                (diskonKupon / hargaSetelahDiskonSlider) * 100,
+                couponDiskonPersen * 100,
                 totalDiskon,
                 hargaAkhir);
             jTextArea1.append(historyEntry);
