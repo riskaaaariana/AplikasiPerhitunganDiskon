@@ -4,13 +4,12 @@
  */
 
 /**
- * AplikasiPerhitunganDiskon - Program GUI sederhana untuk menghitung diskon
- * Program ini memungkinkan pengguna untuk:
- * 1. Memasukkan harga awal
- * 2. Memilih persentase diskon dari pilihan yang tersedia
- * 3. Menghitung harga akhir setelah diskon
+ *
  * @author Riska
  */
+
+import java.util.Hashtable;
+import javax.swing.JLabel;
 public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
 
     /**
@@ -43,12 +42,15 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
         btnDiskon = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
-        jPanel1Layout.columnWidths = new int[] {0, 5, 0, 5, 0};
-        jPanel1Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jPanel1Layout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0};
+        jPanel1Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         jPanel1.setLayout(jPanel1Layout);
 
         jLabel1.setText("Masukan Harga");
@@ -60,22 +62,22 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
 
         jLabel2.setText("Pilih Diskon");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText("Harga Diskon");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel3, gridBagConstraints);
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("===========");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 16;
         jPanel1.add(jLabel4, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -84,10 +86,15 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(fieldHarga, gridBagConstraints);
 
-        jTextField2.setText("jTextField2");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jTextField2, gridBagConstraints);
 
         fieldDiskon.setFocusable(false);
@@ -97,25 +104,43 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(fieldDiskon, gridBagConstraints);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10%", "20%", "30%", "50%", "70%" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10%", "20%", "30%", "50%", "80%" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jComboBox1, gridBagConstraints);
+        jSlider1.setMinimum(0);
+        jSlider1.setMaximum(80);
+        jSlider1.setValue(10);
+        jSlider1.setMajorTickSpacing(10);
+        jSlider1.setMinorTickSpacing(5);
+        jSlider1.setPaintTicks(true);
+        jSlider1.setPaintLabels(true);
+        jSlider1.setPaintTrack(true);
+        
+        // Create labels for slider with 80% max
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+        labelTable.put(0, new JLabel("0%"));
+        labelTable.put(20, new JLabel("20%"));
+        labelTable.put(40, new JLabel("40%"));
+        labelTable.put(60, new JLabel("60%"));
+        labelTable.put(80, new JLabel("80%"));
+        jSlider1.setLabelTable(labelTable);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
         jPanel1.add(jSlider1, gridBagConstraints);
 
@@ -131,16 +156,37 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
         jPanel1.add(btnDiskon, gridBagConstraints);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jScrollPane1, gridBagConstraints);
+
+        jLabel5.setText("Masukan Kupon");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 8;
+        jPanel1.add(jLabel5, gridBagConstraints);
+
+        jLabel6.setText("SAVE10, SAVE20, SUPER50 ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel1.add(jLabel6, gridBagConstraints);
+
+        jLabel7.setText("Kode kupon yang aktif");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel1.add(jLabel7, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,29 +219,80 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
         jSlider1.setValue(diskonValue);
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
-    private void btnDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiskonActionPerformed
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {
+        if (!jSlider1.getValueIsAdjusting()) {
+            int value = jSlider1.getValue();
+            String valueStr = value + "%";
+            
+            // Cek apakah nilai ada di ComboBox
+            boolean found = false;
+            for (int i = 0; i < jComboBox1.getItemCount(); i++) {
+                if (jComboBox1.getItemAt(i).equals(valueStr)) {
+                    jComboBox1.setSelectedIndex(i);
+                    found = true;
+                    break;
+                }
+            }
+            
+            // Jika nilai tidak ada di ComboBox, langsung update perhitungan
+            if (!found && fieldHarga.getText().length() > 0) {
+                btnDiskonActionPerformed(null);
+            }
+        }
+    }
+
+    private double getCouponDiscount(String couponCode) {
+        // Validasi kupon sederhana dengan nilai diskon tetap
+        switch(couponCode.toUpperCase()) {
+            case "SAVE10": return 0.10;
+            case "SAVE20": return 0.20;
+            case "SUPER50": return 0.50;
+            default: return 0.0;
+        }
+    }
+
+    private void btnDiskonActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Mengambil harga awal dari input pengguna
+            // Ambil harga awal dari input pengguna
             double hargaAwal = Double.parseDouble(fieldHarga.getText());
             
-            // Mengambil persentase diskon dari ComboBox
-            String selectedDiskon = (String) jComboBox1.getSelectedItem();
-            double persenDiskon = Double.parseDouble(selectedDiskon.replace("%", "")) / 100.0;
+            // Ambil persentase diskon dari slider
+            double persenDiskon = jSlider1.getValue() / 100.0;
             
-            // Menghitung jumlah diskon dan harga akhir
-            double jumlahDiskon = hargaAwal * persenDiskon;
+            // Ambil diskon dari kupon
+            String couponCode = jTextField2.getText().trim();
+            double couponDiskon = getCouponDiscount(couponCode);
+            
+            // Gabungkan diskon tapi dibatasi maksimal 80%
+            double totalDiskonPersen = Math.min(persenDiskon + couponDiskon, 0.80);
+            double jumlahDiskon = hargaAwal * totalDiskonPersen;
             double hargaAkhir = hargaAwal - jumlahDiskon;
             
-            // Menampilkan hasil perhitungan
+            // Tampilkan hasil
             fieldDiskon.setText(String.format("%.2f", hargaAkhir));
-            jLabel4.setText("Anda hemat: Rp " + String.format("%.2f", jumlahDiskon));
+            jLabel4.setText(String.format("Anda hemat: Rp %.2f (Diskon %.0f%% + Kupon %.0f%%)", 
+                          jumlahDiskon, persenDiskon * 100, couponDiskon * 100));
+            
+            // Tambahkan ke riwayat
+            String historyEntry = String.format(
+                "Harga: Rp %.2f | Diskon: %.0f%% | Kupon: %s (%.0f%%) | Total Diskon: Rp %.2f | Harga Akhir: Rp %.2f\n",
+                hargaAwal,
+                persenDiskon * 100,
+                couponCode.isEmpty() ? "-" : couponCode,
+                couponDiskon * 100,
+                jumlahDiskon,
+                hargaAkhir);
+            jTextArea1.append(historyEntry);
             
         } catch (NumberFormatException e) {
-            // Menampilkan pesan error jika input tidak valid
             fieldDiskon.setText("Error");
             jLabel4.setText("Masukkan angka yang valid!");
         }
     }//GEN-LAST:event_btnDiskonActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,6 +338,9 @@ public class AplikasiPerhitunganDiskon extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
